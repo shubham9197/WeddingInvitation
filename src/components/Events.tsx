@@ -179,15 +179,15 @@ export function Events() {
           {date.footerLine}
         </motion.p>
 
-        <motion.p
+        {/* <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 0.25 }}
           className="mt-3 font-body text-[10px] tracking-[0.35em] text-gold/40 uppercase"
         >
-          Four days of celebration
-        </motion.p>
+          Two days of celebration
+        </motion.p> */}
 
         {/* Mini event timeline */}
         <div className="mt-3 flex w-full max-w-sm gap-1 px-0.5 sm:mt-4 sm:gap-2">
