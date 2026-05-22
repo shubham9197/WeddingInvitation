@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { wedding } from "@/lib/wedding-data";
 import { ScratchHeart } from "./ScratchHeart";
-import { CherryBlossom } from "./CherryBlossom";
 import {
   CelebrationConfetti,
   CONFETTI_BURST_MS,
@@ -46,7 +45,7 @@ export function SaveTheDate() {
         goToNextSlide();
       }, CONFETTI_BURST_MS);
     }
-  }, [goToNextSlide]);
+  }, [goToNextSlide, unlockSaveDate]);
 
   const { ref, playKey } = useSlideReplay();
 
@@ -65,20 +64,15 @@ export function SaveTheDate() {
     >
       <CelebrationConfetti active={celebrate} />
 
-      {/* Soft glow backdrop */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(201,162,39,0.12),transparent_55%)]" />
 
       <div className="relative flex min-h-dvh flex-col items-center justify-center px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-10">
-        <CherryBlossom className="pointer-events-none absolute left-0 top-[42%] h-10 w-10 -translate-y-1/2 sm:left-2 sm:h-14 sm:w-14" />
-        <CherryBlossom className="pointer-events-none absolute right-0 top-[42%] h-10 w-10 -translate-y-1/2 sm:right-2 sm:h-14 sm:w-14" />
-
-        {/* Main card */}
         <motion.div
           key={playKey}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          className="mobile-card dark-card relative rounded-3xl px-4 py-8 sm:px-6 sm:py-10"
+          className="mobile-card dark-card relative rounded-3xl px-4 py-8 text-center sm:px-6 sm:py-10"
         >
           <div className="pointer-events-none absolute -top-px left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#e8c547] to-transparent" />
 
@@ -90,24 +84,14 @@ export function SaveTheDate() {
             <Sparkles className="text-[#d4af37]" size={14} />
           </div>
 
-          <h2 className="mt-5 text-center font-display text-[clamp(1.5rem,6vw,2.4rem)] font-semibold leading-tight text-ivory">
+          <h2 className="mt-5 font-display text-[clamp(1.5rem,6vw,2.4rem)] font-semibold leading-tight text-ivory">
             Reveal Our{" "}
             <span className="shimmer-gold">Big Day</span>
           </h2>
 
-          <p className="mt-3 text-center font-display text-sm italic text-gold/60">
+          <p className="mt-3 font-display text-sm italic text-gold/60">
             Scratch the hearts to reveal
           </p>
-
-          {/* {!allDone && (
-            <motion.p
-              animate={{ opacity: [0.45, 0.85, 0.45] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="mt-2 text-center font-body text-[10px] tracking-[0.12em] text-gold/50"
-            >
-              Reveal all 3 to continue ↓
-            </motion.p>
-          )} */}
 
           <div className="mx-auto mt-6 flex w-full max-w-[min(340px,100%)] justify-between gap-0.5 sm:mt-10 sm:gap-2">
             {parts.map((part) => (
@@ -126,6 +110,7 @@ export function SaveTheDate() {
                 key={`${part.label}-${playKey}`}
                 value={part.value}
                 onRevealed={onHeartRevealed}
+                large
               />
             ))}
           </div>
@@ -135,7 +120,7 @@ export function SaveTheDate() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                className="mt-8 rounded-2xl border border-gold/40 bg-gradient-to-r from-[#1a1512] via-[#121010] to-[#1a1218] px-4 py-3 text-center shadow-[0_0_24px_rgba(201,162,39,0.15)]"
+                className="mt-8 rounded-2xl border border-gold/40 bg-gradient-to-r from-[#1a1512] via-[#121010] to-[#1a1218] px-4 py-3 shadow-[0_0_24px_rgba(201,162,39,0.15)]"
               >
                 <p className="font-script text-2xl text-gold-light">Congratulations!</p>
                 <p className="mt-1 font-body text-[10px] tracking-[0.2em] text-gold/60 uppercase">
@@ -153,7 +138,7 @@ export function SaveTheDate() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.45 }}
-                className="mt-8 space-y-2 text-center"
+                className="mt-8 space-y-2"
               >
                 <p className="font-display text-sm leading-relaxed text-gold/75 italic sm:text-base">
                   {date.loveLine}
@@ -168,7 +153,7 @@ export function SaveTheDate() {
                 initial={{ opacity: 0, scale: 0.92, y: 8 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-8 text-center font-body text-[11px] font-medium tracking-[0.22em] text-gold/90 uppercase"
+                className="mt-8 font-body text-[11px] font-medium tracking-[0.22em] text-gold/90 uppercase"
               >
                 {date.footerLine}
               </motion.p>

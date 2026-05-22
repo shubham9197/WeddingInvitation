@@ -6,6 +6,7 @@ import { wedding } from "@/lib/wedding-data";
 import { COUNTDOWN_SLIDE_INDEX } from "@/context/ReelUnlockContext";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
 import { getReelScrollContainer, getReelSlideHeight } from "@/lib/reel-scroll";
+import { CountdownFrameCard } from "./CountdownFrameCard";
 
 const AUTO_ADVANCE_MS = 6000;
 
@@ -146,8 +147,9 @@ export function Countdown() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false }}
         transition={{ duration: 0.8 }}
-        className="mobile-card dark-card frame-border relative z-10 mx-auto w-full px-5 py-6 text-center sm:px-8 sm:py-10"
+        className="relative z-10 w-full"
       >
+        <CountdownFrameCard>
         <HeartbeatLine />
 
         <motion.p
@@ -155,7 +157,7 @@ export function Countdown() {
           whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
           viewport={{ once: false }}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="mt-5 font-body text-[10px] tracking-[0.4em] text-gold/60 uppercase"
+          className="mt-4 font-body text-[10px] tracking-[0.4em] text-gold/60 uppercase"
         >
           Counting every heartbeat until
         </motion.p>
@@ -193,7 +195,7 @@ export function Countdown() {
           {couple.bride}
         </motion.p>
 
-        <div className="mt-6 grid grid-cols-4 gap-1.5 sm:mt-10 sm:gap-3">
+        <div className="mt-5 grid grid-cols-4 gap-1.5 sm:mt-7 sm:gap-2.5">
           {LABELS.map((label, i) => (
             <motion.div
               key={label}
@@ -235,7 +237,7 @@ export function Countdown() {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 0.9, duration: 0.8 }}
-          className="mx-auto mt-8 h-px w-32 bg-gradient-to-r from-transparent via-gold/50 to-transparent sm:w-40"
+          className="mx-auto mt-6 h-px w-32 bg-gradient-to-r from-transparent via-gold/50 to-transparent sm:w-40"
         />
 
         <motion.p
@@ -243,7 +245,7 @@ export function Countdown() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 1 }}
-          className="mt-5 font-body text-[10px] font-medium tracking-[0.22em] text-gold/70 uppercase"
+          className="mt-4 font-body text-[10px] font-medium tracking-[0.22em] text-gold/70 uppercase"
         >
           {date.footerLine}
         </motion.p>
@@ -251,10 +253,11 @@ export function Countdown() {
         <motion.p
           animate={{ opacity: [0.35, 0.7, 0.35] }}
           transition={{ duration: 2.5, repeat: Infinity }}
-          className="mt-4 font-display text-xs italic text-gold/45"
+          className="mt-3 font-display text-xs italic text-gold/45"
         >
           Until we say &ldquo;I do&rdquo;
         </motion.p>
+        </CountdownFrameCard>
       </motion.div>
 
       {/* Bottom decorative rings */}

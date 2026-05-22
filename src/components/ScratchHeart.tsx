@@ -61,9 +61,11 @@ function scratchPercent(
 type Props = {
   value: string;
   onRevealed: () => void;
+  /** Wider hearts for the floral frame card */
+  large?: boolean;
 };
 
-export function ScratchHeart({ value, onRevealed }: Props) {
+export function ScratchHeart({ value, onRevealed, large }: Props) {
   const uid = useId().replace(/:/g, "");
   const clipId = `heart-clip-${uid}`;
   const containerRef = useRef<HTMLDivElement>(null);
@@ -155,7 +157,11 @@ export function ScratchHeart({ value, onRevealed }: Props) {
   return (
     <motion.div
       ref={containerRef}
-      className="relative aspect-[120/110] w-[min(26vw,118px)] min-w-[72px] max-w-[120px] touch-none select-none overflow-hidden sm:min-w-[82px]"
+      className={
+        large
+          ? "relative aspect-[120/110] w-[min(30vw,132px)] min-w-[84px] max-w-[132px] touch-none select-none overflow-hidden sm:min-w-[96px]"
+          : "relative aspect-[120/110] w-[min(26vw,118px)] min-w-[72px] max-w-[120px] touch-none select-none overflow-hidden sm:min-w-[82px]"
+      }
       style={{ transformOrigin: "center center" }}
       animate={
         done

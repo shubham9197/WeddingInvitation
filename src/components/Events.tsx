@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { wedding } from "@/lib/wedding-data";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
+import { EventFrameCard } from "./EventFrameCard";
 
 const EVENTS = wedding.events;
 
@@ -234,64 +235,56 @@ export function Events() {
                 ref={(el) => {
                   cardRefs.current[i] = el;
                 }}
-                className="flex w-full shrink-0 snap-center snap-always justify-center px-1 sm:px-2"
+                className="flex w-full shrink-0 snap-center snap-always justify-center"
                 initial={{ opacity: 0, scale: 0.72 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: false, amount: 0.35 }}
-                transition={{ delay: i * 0.15, duration: 1.05, ease }}
+                animate={{
+                  scale: isActive ? 1 : 0.94,
+                  opacity: isActive ? 1 : 0.55,
+                }}
+                transition={{
+                  delay: i * 0.15,
+                  duration: 0.55,
+                  ease,
+                }}
                 style={{ transformOrigin: "center center" }}
               >
-                <motion.article
-                  animate={{
-                    scale: isActive ? 1 : 0.94,
-                    opacity: isActive ? 1 : 0.55,
-                  }}
-                  transition={{ duration: 0.5, ease }}
-                  className="invite-card relative flex w-full max-w-[18.5rem] flex-col items-center overflow-hidden px-6 py-5 text-center sm:max-w-[20rem] sm:px-7 sm:py-6"
-                >
-                  <motion.div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-transparent"
-                    animate={{ opacity: isActive ? 1 : 0 }}
-                    transition={{ duration: 0.45 }}
-                  />
-                  <motion.span
-                    className="relative block text-4xl"
-                    animate={
-                      isActive
-                        ? { y: [0, -6, 0], scale: [1, 1.08, 1] }
-                        : { y: 0, scale: 1 }
-                    }
-                    transition={
-                      isActive
-                        ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
-                        : { duration: 0.3 }
-                    }
-                  >
-                    {event.icon}
-                  </motion.span>
-                  <div className="relative flex w-full flex-col items-center space-y-2 sm:space-y-2.5">
-                    <h3 className="mt-2 font-script text-3xl leading-snug text-ivory sm:mt-3 sm:text-4xl">
+                  <EventFrameCard>
+                    <motion.span
+                      className="relative block shrink-0 text-3xl sm:text-4xl"
+                      animate={
+                        isActive
+                          ? { y: [0, -6, 0], scale: [1, 1.08, 1] }
+                          : { y: 0, scale: 1 }
+                      }
+                      transition={
+                        isActive
+                          ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                          : { duration: 0.3 }
+                      }
+                    >
+                      {event.icon}
+                    </motion.span>
+                    <h3 className="shrink-0 font-script text-[clamp(1.65rem,6vw,2.25rem)] leading-snug text-ivory">
                       {event.name}
                     </h3>
                     <motion.div
-                      className="h-px bg-gold/50"
+                      className="h-px shrink-0 bg-gold/50"
                       animate={{
                         width: isActive ? 48 : 24,
                         opacity: isActive ? 1 : 0.4,
                       }}
                       transition={{ duration: 0.45 }}
                     />
-                    <p className="font-display text-lg font-medium leading-snug text-gold-light">
+                    <p className="shrink-0 font-display text-base font-medium leading-snug text-gold-light sm:text-lg">
                       {event.date}
                     </p>
-                    <p className="font-body text-sm leading-relaxed text-gold/65">
+                    <p className="shrink-0 font-body text-sm leading-relaxed text-gold/65">
                       {event.time}
                     </p>
-                    <p className="font-body text-xs leading-relaxed text-gold/45">
+                    <p className="shrink-0 font-body text-xs leading-relaxed text-gold/45">
                       {event.venue}
                     </p>
-                  </div>
-                </motion.article>
+                  </EventFrameCard>
               </motion.div>
             );
           })}

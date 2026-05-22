@@ -212,6 +212,116 @@ body {
   border-top: none;
 }
 
+/* Countdown — unique gold ring + L-corner frame */
+.countdown-frame {
+  padding: 2px;
+  border-radius: 6px;
+  background: linear-gradient(
+    145deg,
+    rgba(232, 196, 71, 0.65) 0%,
+    rgba(201, 162, 39, 0.3) 45%,
+    rgba(139, 105, 20, 0.5) 100%
+  );
+  box-shadow:
+    0 0 40px rgba(201, 162, 39, 0.15),
+    0 18px 44px rgba(0, 0, 0, 0.4);
+}
+
+.countdown-frame__inner {
+  border-radius: 4px;
+  background: linear-gradient(
+    168deg,
+    rgba(28, 22, 18, 0.98) 0%,
+    rgba(10, 9, 8, 0.99) 55%,
+    rgba(18, 14, 12, 0.98) 100%
+  );
+  border: 1px solid rgba(201, 162, 39, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 224, 0.08),
+    inset 0 0 56px rgba(201, 162, 39, 0.05);
+}
+
+.countdown-frame__inner.frame-border::before,
+.countdown-frame__inner.frame-border::after {
+  width: 56px;
+  height: 56px;
+  border-width: 2px;
+  border-color: rgba(232, 196, 71, 0.72);
+}
+
+/* Floral decorated card — corners + garland */
+.floral-card {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
+.floral-corner {
+  position: absolute;
+  z-index: 2;
+  font-size: 1.1rem;
+  line-height: 1;
+  opacity: 0.55;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(201, 162, 39, 0.35));
+}
+
+.floral-corner--tl {
+  top: 0.5rem;
+  left: 0.65rem;
+  transform: rotate(-12deg);
+}
+
+.floral-corner--tr {
+  top: 0.5rem;
+  right: 0.65rem;
+  transform: rotate(12deg) scaleX(-1);
+}
+
+.floral-corner--bl {
+  bottom: 0.5rem;
+  left: 0.65rem;
+  transform: rotate(8deg);
+}
+
+.floral-corner--br {
+  bottom: 0.5rem;
+  right: 0.65rem;
+  transform: rotate(-8deg) scaleX(-1);
+}
+
+.floral-garland {
+  position: absolute;
+  left: 50%;
+  z-index: 2;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  white-space: nowrap;
+  opacity: 0.4;
+  pointer-events: none;
+  transform: translateX(-50%);
+  color: rgba(232, 197, 71, 0.85);
+}
+
+.floral-garland--top {
+  top: 0.35rem;
+}
+
+.floral-garland--bottom {
+  bottom: 0.35rem;
+}
+
+.ornament-line {
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 162, 39, 0.55) 20%,
+    rgba(201, 162, 39, 0.55) 80%,
+    transparent
+  );
+}
+
 /* Gallery lightbox — animated wedding photo frame */
 .gallery-frame-outer {
   background: linear-gradient(145deg, #9e1f3d 0%, #6b1228 45%, #5c0f28 100%);

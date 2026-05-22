@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { wedding } from "@/lib/wedding-data";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
+import { FamilyFrameCard } from "./FamilyFrameCard";
 
 const HEART_PATH =
   "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z";
@@ -33,18 +34,20 @@ function FamilyCard({
         duration: 0.85,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="invite-card mx-auto w-full max-w-md px-6 py-5 text-center sm:px-8 sm:py-6"
+      className="w-full"
     >
-      <span className="font-body text-[9px] tracking-[0.28em] text-gold/45 uppercase">
-        {label}
-      </span>
-      <p className="mt-3 font-display text-base font-semibold leading-snug text-ivory sm:text-lg">
-        {name}
-      </p>
-      <p className="mt-1.5 font-body text-[11px] text-gold/50">{relation}</p>
-      <p className="mt-1 font-display text-sm leading-relaxed italic text-gold-light sm:text-base">
-        {parents}
-      </p>
+      <FamilyFrameCard>
+        <span className="shrink-0 font-body text-[9px] tracking-[0.28em] text-gold/55 uppercase">
+          {label}
+        </span>
+        <p className="shrink-0 font-display text-base font-semibold leading-snug text-ivory sm:text-lg">
+          {name}
+        </p>
+        <p className="shrink-0 font-body text-[11px] text-gold/55">{relation}</p>
+        <p className="shrink-0 font-display text-sm leading-relaxed italic text-gold-light sm:text-base">
+          {parents}
+        </p>
+      </FamilyFrameCard>
     </motion.div>
   );
 }
@@ -68,7 +71,7 @@ export function Family() {
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative z-10 flex w-full max-w-md flex-col items-center gap-6 sm:gap-7">
+      <div className="relative z-10 flex w-full max-w-md flex-col items-center gap-6 sm:max-w-lg sm:gap-7">
         <div className="w-full space-y-4 text-center sm:space-y-5">
           <div className="mx-auto h-px w-20 bg-gradient-to-r from-transparent via-gold/45 to-transparent sm:w-24" />
 
@@ -115,40 +118,40 @@ export function Family() {
         </motion.div>
 
         <div className="flex w-full flex-col items-center gap-5 sm:gap-6">
-        <FamilyCard
-          label="Bride's family"
-          name={couple.brideFull}
-          relation="Daughter of"
-          parents={family.brideParents}
-          playKey={playKey}
-        />
+          <FamilyCard
+            label="Bride's family"
+            name={couple.brideFull}
+            relation="Daughter of"
+            parents={family.brideParents}
+            playKey={playKey}
+          />
 
-        <motion.div
-          className="flex justify-center py-2 sm:py-3"
-          initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: false, amount: 0.35 }}
-          transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.svg
-            viewBox="0 0 24 24"
-            className="heart-shiny-red h-6 w-6 fill-current"
-            animate={{ scale: [1, 1.12, 1] }}
-            transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
-            aria-hidden
+          <motion.div
+            className="flex justify-center py-1 sm:py-2"
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: false, amount: 0.35 }}
+            transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <path d={HEART_PATH} />
-          </motion.svg>
-        </motion.div>
+            <motion.svg
+              viewBox="0 0 24 24"
+              className="heart-shiny-red h-6 w-6 fill-current"
+              animate={{ scale: [1, 1.12, 1] }}
+              transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden
+            >
+              <path d={HEART_PATH} />
+            </motion.svg>
+          </motion.div>
 
-        <FamilyCard
-          label="Groom's family"
-          name={couple.groomFull}
-          relation="Son of"
-          parents={family.groomParents}
-          playKey={playKey}
-          delay={0.12}
-        />
+          <FamilyCard
+            label="Groom's family"
+            name={couple.groomFull}
+            relation="Son of"
+            parents={family.groomParents}
+            playKey={playKey}
+            delay={0.12}
+          />
         </div>
 
         <div className="w-full space-y-4 pt-2 text-center sm:space-y-5 sm:pt-3">
