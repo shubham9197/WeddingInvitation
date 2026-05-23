@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ScratchHeartPulse } from "./ScratchHandHint";
 
 const BRUSH_MOBILE = 28;
 const BRUSH_DESKTOP = 24;
@@ -63,9 +64,17 @@ type Props = {
   onRevealed: () => void;
   /** Wider hearts for the floral frame card */
   large?: boolean;
+  onScratchStart?: () => void;
+  showHint?: boolean;
 };
 
-export function ScratchHeart({ value, onRevealed, large }: Props) {
+export function ScratchHeart({
+  value,
+  onRevealed,
+  large,
+  onScratchStart,
+  showHint = false,
+}: Props) {
   const uid = useId().replace(/:/g, "");
   const clipId = `heart-clip-${uid}`;
   const containerRef = useRef<HTMLDivElement>(null);
@@ -159,8 +168,8 @@ export function ScratchHeart({ value, onRevealed, large }: Props) {
       ref={containerRef}
       className={
         large
-          ? "relative aspect-[120/110] w-[min(30vw,132px)] min-w-[84px] max-w-[132px] touch-none select-none overflow-hidden sm:min-w-[96px]"
-          : "relative aspect-[120/110] w-[min(26vw,118px)] min-w-[72px] max-w-[120px] touch-none select-none overflow-hidden sm:min-w-[82px]"
+          ? "relative aspect-[120/110] w-[min(30vw,132px)] min-w-[84px] max-w-[132px] touch-none select-none overflow-visible sm:min-w-[96px]"
+          : "relative aspect-[120/110] w-[min(26vw,118px)] min-w-[72px] max-w-[120px] touch-none select-none overflow-visible sm:min-w-[82px]"
       }
       style={{ transformOrigin: "center center" }}
       animate={
@@ -254,6 +263,8 @@ export function ScratchHeart({ value, onRevealed, large }: Props) {
         </text>
       </svg>
 
+      {showHint && !done && <ScratchHeartPulse />}
+
       {/* Red 3D scratch cover */}
       <AnimatePresence>
         {!done && (
@@ -264,6 +275,7 @@ export function ScratchHeart({ value, onRevealed, large }: Props) {
             className="absolute inset-0 z-10 h-full w-full cursor-grab active:cursor-grabbing"
             style={{ touchAction: "none" }}
             onPointerDown={(e) => {
+              onScratchStart?.();
               scratching.current = true;
               (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
               erase(e.clientX, e.clientY);

@@ -149,24 +149,8 @@ export function EnvelopeIntro({ onOpen }: Props) {
                       initials={initials}
                       opening={isOpening || isEmerge}
                       fading={isEmerge}
+                      showTapHint={phase === "envelope"}
                     />
-
-                    {phase === "envelope" && (
-                      <>
-                        <motion.span
-                          className="pointer-events-none absolute left-1/2 top-[46%] z-[6] h-[4.75rem] w-[4.75rem] -translate-x-1/2 rounded-full border-2 border-[#fff8e8]/45"
-                          animate={{ scale: [1, 1.4, 1], opacity: [0.55, 0, 0.55] }}
-                          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                        <motion.p
-                          className="mt-12 text-center font-body text-xs font-medium tracking-[0.3em] text-black uppercase"
-                          animate={{ opacity: [0.45, 1, 0.45] }}
-                          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          Tap the envelope to open
-                        </motion.p>
-                      </>
-                    )}
                   </div>
                 </motion.div>
               </motion.div>

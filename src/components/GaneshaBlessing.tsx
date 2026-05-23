@@ -52,7 +52,7 @@ export function GaneshaBlessing() {
 
   return (
     <motion.div
-      className="mobile-card dark-card frame-border relative mx-auto w-full overflow-hidden px-4 py-5 sm:px-6 sm:py-8"
+      className="mobile-card dark-card frame-border relative mx-auto w-full overflow-hidden px-2.5 py-3 sm:px-6 sm:py-7"
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 }}
@@ -73,7 +73,7 @@ export function GaneshaBlessing() {
         />
 
         <motion.div
-          className="relative z-10 aspect-[165/195] w-[min(42vw,165px)] overflow-hidden"
+          className="ganesha-hero-size relative z-10 aspect-[165/195] w-[min(38vw,150px)] overflow-hidden sm:w-[min(42vw,165px)]"
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0% 0 0 0)" }}
           transition={{
@@ -97,7 +97,7 @@ export function GaneshaBlessing() {
 
       {ganeshaDone && (
         <motion.div
-          className="relative mt-5 w-full border-y border-gold/20 py-4"
+          className="hero-shloka-block relative mt-3 w-full border-y border-gold/20 py-3 sm:mt-5 sm:py-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
@@ -109,7 +109,7 @@ export function GaneshaBlessing() {
                 index={i}
                 startMs={GAP_AFTER_GANESHA_MS}
                 intervalMs={WORD_INTERVAL_MS}
-                className="shloka-gold font-devanagari text-[13px] font-semibold sm:text-sm"
+                className="shloka-gold font-devanagari text-[11px] font-semibold sm:text-sm"
               >
                 {word}
               </RevealWord>
@@ -119,7 +119,7 @@ export function GaneshaBlessing() {
       )}
 
       {showInvite && (
-        <div className="mt-2 w-full">
+        <div className="mt-1 w-full sm:mt-2">
           <WeddingInviteCard embedded heroSequence />
         </div>
       )}
@@ -128,7 +128,7 @@ export function GaneshaBlessing() {
         <motion.p
           animate={{ opacity: [0.4, 0.8, 0.4] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="mt-4 text-center font-body text-[10px] tracking-[0.12em] text-gold/45"
+          className="mt-2 text-center font-body text-[9px] tracking-[0.12em] text-gold/45 sm:mt-4 sm:text-[10px]"
         >
           Please wait for the blessing to finish…
         </motion.p>

@@ -116,7 +116,7 @@ export function Gallery() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-maroon/45 via-transparent to-transparent" />
             {i === 0 && (
-              <span className="absolute bottom-2 left-3 font-script text-lg text-ivory sm:bottom-3 sm:text-2xl">
+              <span className="shimmer-red absolute bottom-2 left-3 font-script text-lg sm:bottom-3 sm:text-2xl">
                 Together Forever
               </span>
             )}

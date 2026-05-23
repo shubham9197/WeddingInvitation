@@ -130,6 +130,70 @@ body {
   color: #f0e6d8;
 }
 
+/* Hero / tall slides: grow with content so names are never clipped */
+.reel-slide--tall {
+  height: auto;
+  min-height: 100dvh;
+  min-height: 100svh;
+}
+
+@media (max-height: 740px) {
+  .reel-slide--compact-start {
+    justify-content: flex-start;
+    padding-top: max(0.35rem, env(safe-area-inset-top));
+  }
+}
+
+/* Hero invite typography — scales down on narrow / short viewports */
+.invite-hero-name {
+  font-size: clamp(1.6rem, 7.2vw, 4.5rem);
+  line-height: 0.95;
+}
+
+@media (max-height: 700px) {
+  .invite-hero-name {
+    font-size: clamp(1.45rem, 6.2vw, 2.65rem);
+  }
+
+  .hero-shloka-block {
+    margin-top: 0.65rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .hero-shloka-block .shloka-gold {
+    font-size: 11px;
+  }
+
+  .ganesha-hero-size {
+    width: min(34vw, 118px) !important;
+  }
+}
+
+@media (max-height: 620px) {
+  .invite-hero-name {
+    font-size: clamp(1.35rem, 5.5vw, 2.25rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .frame-border::before,
+  .frame-border::after {
+    width: 32px;
+    height: 32px;
+  }
+
+  .frame-border::before {
+    top: 8px;
+    left: 8px;
+  }
+
+  .frame-border::after {
+    bottom: 8px;
+    right: 8px;
+  }
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -163,6 +227,26 @@ body {
   background-clip: text;
   color: transparent;
   animation: shimmer 4s linear infinite;
+}
+
+/* Shiny red — gallery caption & accents */
+.shimmer-red {
+  background: linear-gradient(
+    110deg,
+    #9a1a1a 0%,
+    #ef1a1a 22%,
+    #ff6b6b 45%,
+    #ff9999 50%,
+    #ef1a1a 78%,
+    #b80f0f 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3.2s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 55, 55, 0.55))
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.65));
 }
 
 @keyframes shimmer {
@@ -210,6 +294,83 @@ body {
   right: 12px;
   border-left: none;
   border-top: none;
+}
+
+/* Events — highlighted celebration card */
+.event-showcase-card {
+  border-radius: 1rem;
+  transition:
+    box-shadow 0.5s ease,
+    border-color 0.5s ease,
+    transform 0.5s ease;
+}
+
+.event-showcase-card--active {
+  border-color: rgba(232, 196, 71, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(255, 248, 224, 0.06),
+    0 0 36px rgba(201, 162, 39, 0.2),
+    0 20px 44px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 248, 224, 0.1);
+}
+
+.event-tab--active {
+  border-color: rgba(232, 196, 71, 0.55) !important;
+  background: linear-gradient(
+    165deg,
+    rgba(201, 162, 39, 0.16) 0%,
+    rgba(18, 16, 14, 0.95) 100%
+  ) !important;
+  box-shadow: 0 0 20px rgba(201, 162, 39, 0.12);
+}
+
+/* Family — celebration cards */
+.family-showcase-card {
+  border-radius: 1rem;
+  transition: box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+.family-showcase-card:hover {
+  border-color: rgba(232, 196, 71, 0.5);
+  box-shadow:
+    0 0 28px rgba(201, 162, 39, 0.15),
+    0 16px 36px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 248, 224, 0.08);
+}
+
+/* Save the Date — scratchable heart shimmer */
+.scratch-cover-shimmer {
+  position: relative;
+}
+
+.scratch-cover-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 48%,
+    rgba(255, 255, 255, 0.08) 52%,
+    transparent 65%
+  );
+  animation: scratch-shimmer 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes scratch-shimmer {
+  0% {
+    transform: translateX(-120%) skewX(-12deg);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120%) skewX(-12deg);
+    opacity: 0;
+  }
 }
 
 /* Countdown — unique gold ring + L-corner frame */

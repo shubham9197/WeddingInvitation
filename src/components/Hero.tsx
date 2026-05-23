@@ -12,9 +12,11 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="reel-slide relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden overflow-y-auto mobile-safe-x px-4 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8"
+      className="reel-slide reel-slide--tall reel-slide--compact-start relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden overflow-y-visible mobile-safe-x px-3 py-4 pb-[max(5rem,calc(env(safe-area-inset-bottom)+3.5rem))] pt-[max(0.5rem,env(safe-area-inset-top))] sm:px-6 sm:py-6 sm:pb-[max(4.5rem,env(safe-area-inset-bottom))]"
     >
-      <GaneshaBlessing key={playKey} />
+      <div className="mx-auto w-full max-w-md shrink-0">
+        <GaneshaBlessing key={playKey} />
+      </div>
       {heroRevealed && <ScrollHint />}
     </section>
   );

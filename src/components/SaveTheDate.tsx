@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { wedding } from "@/lib/wedding-data";
 import { ScratchHeart } from "./ScratchHeart";
+import { ScratchHandAbove, ScratchTapBelow } from "./ScratchHandHint";
 import {
   CelebrationConfetti,
   CONFETTI_BURST_MS,
@@ -20,6 +21,8 @@ export function SaveTheDate() {
   const navigated = useRef(false);
   const [allDone, setAllDone] = useState(false);
   const [celebrate, setCelebrate] = useState(false);
+  const [userEngaged, setUserEngaged] = useState(false);
+  const [revealedHearts, setRevealedHearts] = useState([false, false, false]);
   const parts = [date.scratch.day, date.scratch.month, date.scratch.year];
 
   const goToNextSlide = useCallback(() => {
@@ -33,7 +36,12 @@ export function SaveTheDate() {
     });
   }, []);
 
-  const onHeartRevealed = useCallback(() => {
+  const onHeartRevealed = useCallback((index: number) => {
+    setRevealedHearts((prev) => {
+      const next = [...prev];
+      next[index] = true;
+      return next;
+    });
     revealed.current += 1;
     if (revealed.current >= 3 && !navigated.current) {
       navigated.current = true;
@@ -55,7 +63,14 @@ export function SaveTheDate() {
     navigated.current = false;
     setAllDone(false);
     setCelebrate(false);
+    setUserEngaged(false);
+    setRevealedHearts([false, false, false]);
   }, [playKey]);
+
+  const firstUnrevealed = revealedHearts.findIndex((r) => !r);
+  /** Start on DAY (0); after scratching, move to next unrevealed heart */
+  const hintHeartIndex = userEngaged ? firstUnrevealed : 0;
+  const showHandHint = !allDone && hintHeartIndex >= 0;
 
   return (
     <section
@@ -89,9 +104,13 @@ export function SaveTheDate() {
             <span className="shimmer-gold">Big Day</span>
           </h2>
 
-          <p className="mt-3 font-display text-sm italic text-gold/60">
+          <motion.p
+            className="mt-3 font-display text-sm italic text-gold/60"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
             Scratch the hearts to reveal
-          </p>
+          </motion.p>
 
           <div className="mx-auto mt-6 flex w-full max-w-[min(340px,100%)] justify-between gap-0.5 sm:mt-10 sm:gap-2">
             {parts.map((part) => (
@@ -104,15 +123,29 @@ export function SaveTheDate() {
             ))}
           </div>
 
-          <div className="mx-auto mt-2 flex w-full max-w-[min(340px,100%)] justify-between gap-0.5 sm:mt-3 sm:gap-2">
-            {parts.map((part) => (
-              <ScratchHeart
-                key={`${part.label}-${playKey}`}
-                value={part.value}
-                onRevealed={onHeartRevealed}
-                large
-              />
-            ))}
+          <div className="relative mx-auto mt-2 w-full max-w-[min(340px,100%)] sm:mt-3">
+            <div className="flex w-full justify-between gap-0.5 sm:gap-2">
+              {parts.map((part, index) => {
+                const isHintTarget =
+                  showHandHint && hintHeartIndex === index;
+                return (
+                  <div
+                    key={`${part.label}-${playKey}`}
+                    className="flex min-w-0 flex-1 flex-col items-center"
+                  >
+                    {isHintTarget && <ScratchHandAbove />}
+                    <ScratchHeart
+                      value={part.value}
+                      onRevealed={() => onHeartRevealed(index)}
+                      onScratchStart={() => setUserEngaged(true)}
+                      showHint={isHintTarget}
+                      large
+                    />
+                    {isHintTarget && <ScratchTapBelow />}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <AnimatePresence>

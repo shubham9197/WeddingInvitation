@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { TapFingerHint } from "./TapFingerHint";
 
 const SMOOTH = [0.22, 1, 0.36, 1] as const;
 
@@ -12,6 +13,8 @@ type Props = {
   hideFrame?: boolean;
   /** Fade out during emerge to Hero */
   fading?: boolean;
+  /** Show tap hand on the seal */
+  showTapHint?: boolean;
 };
 
 /** Indian wedding envelope with Shankar–Parvati hands artwork */
@@ -20,6 +23,7 @@ export function WeddingEnvelope({
   opening,
   hideFrame = false,
   fading = false,
+  showTapHint = false,
 }: Props) {
   return (
     <div
@@ -27,7 +31,9 @@ export function WeddingEnvelope({
       style={{ aspectRatio: "3/4", perspective: 1200, transformStyle: "preserve-3d" }}
     >
       <motion.div
-        className="relative h-full w-full overflow-hidden rounded-lg"
+        className={`relative h-full w-full rounded-lg ${
+          showTapHint ? "overflow-visible" : "overflow-hidden"
+        }`}
         animate={{
           opacity: hideFrame || fading ? 0 : 1,
           scale: hideFrame ? 0.95 : fading ? 0.9 : opening ? 1.02 : 1,
@@ -147,7 +153,7 @@ export function WeddingEnvelope({
         </motion.div>
 
         <motion.div
-          className="absolute left-1/2 z-[6] flex items-center justify-center rounded-full"
+          className="absolute left-1/2 z-[6] flex items-center justify-center overflow-visible rounded-full"
           style={{
             top: "46%",
             width: "4.75rem",
@@ -169,7 +175,10 @@ export function WeddingEnvelope({
               : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
           }
         >
-          <span className="font-script text-[1.65rem] text-[#fff8e8]">{initials}</span>
+          <span className="relative z-[1] font-script text-[1.65rem] text-[#fff8e8]">
+            {initials}
+          </span>
+          {showTapHint && <TapFingerHint />}
         </motion.div>
 
         {!opening && !hideFrame && !fading && (

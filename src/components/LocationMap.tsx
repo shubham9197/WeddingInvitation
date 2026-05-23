@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, ExternalLink } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { wedding } from "@/lib/wedding-data";
+import { VenueGuideHint, VenueMapsCta } from "./VenueGuideHint";
 
 function buildEmbedUrl(): string {
   const { venue } = wedding;
@@ -18,6 +20,13 @@ function buildEmbedUrl(): string {
 export function LocationMap() {
   const { venue } = wedding;
   const embedUrl = buildEmbedUrl();
+  const [showGuide, setShowGuide] = useState(true);
+  const [showTapHint, setShowTapHint] = useState(false);
+
+  const dismissGuide = () => {
+    setShowGuide(false);
+    setShowTapHint(false);
+  };
 
   return (
     <motion.div
@@ -26,14 +35,21 @@ export function LocationMap() {
       viewport={{ once: false }}
       className="mx-auto w-full max-w-md"
     >
-      <div className="dark-card overflow-hidden rounded-2xl">
+      <div className="dark-card relative overflow-visible rounded-2xl">
         <motion.div
-          className="relative h-40 w-full sm:h-48 md:h-52"
+          className="relative h-40 w-full overflow-hidden sm:h-48 md:h-52"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 0.2 }}
         >
+          {showGuide && (
+            <VenueGuideHint
+              visible={showGuide}
+              onOfficerReady={() => setShowTapHint(true)}
+            />
+          )}
+
           <iframe
             title="Wedding venue map"
             src={embedUrl}
@@ -48,6 +64,7 @@ export function LocationMap() {
             rel="noopener noreferrer"
             className="absolute inset-0 z-10"
             aria-label={`Open ${venue.name} in Google Maps`}
+            onClick={dismissGuide}
           />
         </motion.div>
 
@@ -64,15 +81,13 @@ export function LocationMap() {
           <p className="font-body text-xs leading-relaxed text-gold/55 sm:text-sm">
             {venue.address}
           </p>
-          <a
-            href={venue.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-1 inline-flex items-center gap-1.5 pt-1 font-body text-[10px] tracking-[0.15em] text-gold uppercase underline-offset-2 hover:underline"
-          >
-            Open in Google Maps
-            <ExternalLink size={12} />
-          </a>
+
+          <VenueMapsCta
+            mapUrl={venue.mapUrl}
+            venueName={venue.name}
+            showTapHint={showGuide && showTapHint}
+            onDismiss={dismissGuide}
+          />
         </div>
       </div>
     </motion.div>

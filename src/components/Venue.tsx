@@ -12,7 +12,7 @@ export function Venue() {
   return (
     <section
       ref={ref}
-      className="reel-slide relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden overflow-y-auto mobile-safe-x px-4 py-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8"
+      className="reel-slide relative flex min-h-dvh flex-col overflow-x-hidden overflow-y-auto mobile-safe-x"
     >
       <motion.div
         className="pointer-events-none absolute left-1/2 top-1/2 h-[min(85vw,340px)] w-[min(85vw,340px)] -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -24,7 +24,7 @@ export function Venue() {
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative z-10 flex w-full max-w-md flex-col items-center gap-6 sm:gap-7">
+      <div className="relative z-10 mx-auto my-auto flex w-full max-w-md flex-col items-center gap-5 px-4 py-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] sm:gap-6 sm:px-6">
         <div className="w-full space-y-3 text-center sm:space-y-4">
           <div className="mx-auto h-px w-24 bg-gradient-to-r from-transparent via-gold/50 to-transparent sm:w-32" />
 
@@ -89,21 +89,8 @@ export function Venue() {
           </div>
         </motion.div>
 
-        <div className="flex w-full flex-col items-center space-y-4 pt-1 sm:space-y-5">
+        <div className="flex w-full flex-col items-center space-y-3 pt-1 sm:space-y-4">
           <div className="h-px w-28 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-
-          <motion.div className="relative h-12 w-full" aria-hidden>
-            <motion.div
-              className="absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/15"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-gold/20"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            />
-          </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
@@ -111,7 +98,7 @@ export function Venue() {
             viewport={{ once: false }}
             className="font-body text-[9px] tracking-[0.22em] text-gold/35 uppercase"
           >
-            Tap open in maps for directions
+            Click the map or link above for directions
           </motion.p>
         </div>
       </div>

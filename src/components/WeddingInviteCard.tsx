@@ -34,7 +34,7 @@ export function WeddingInviteCard({
   const { couple } = wedding;
 
   const shellClass = embedded
-    ? `relative px-2 py-6 text-center sm:py-8 ${className}`
+    ? `relative px-1 py-3 text-center sm:px-2 sm:py-6 ${className}`
     : `invite-card frame-border relative px-6 py-10 text-center sm:px-10 sm:py-14 ${className}`;
 
   if (heroSequence) {
@@ -48,7 +48,7 @@ export function WeddingInviteCard({
 
     return (
       <div className={shellClass}>
-        <p className="font-body text-[10px] tracking-[0.4em] text-gold/55 uppercase">
+        <p className="font-body text-[9px] tracking-[0.28em] text-gold/55 uppercase sm:text-[10px] sm:tracking-[0.4em]">
           {FAMILIES_WORDS.map((w, i) => (
             <RevealWord
               key={w}
@@ -63,7 +63,7 @@ export function WeddingInviteCard({
         </p>
 
         <motion.p
-          className="mt-6 font-display text-sm tracking-[0.2em] text-gold/65 uppercase"
+          className="mt-3 font-display text-[11px] leading-snug tracking-[0.14em] text-gold/65 uppercase sm:mt-6 sm:text-sm sm:tracking-[0.2em]"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: requestDelay, duration: 0.65, ease }}
@@ -72,7 +72,7 @@ export function WeddingInviteCard({
         </motion.p>
 
         <motion.h1
-          className="mt-6 overflow-hidden font-script text-[clamp(2.75rem,12vw,4.5rem)] leading-none text-maroon"
+          className="invite-hero-name mt-3 overflow-hidden font-script text-maroon sm:mt-6"
           initial={{ opacity: 0, x: -72 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: groomDelay, duration: 0.75, ease }}
@@ -80,15 +80,15 @@ export function WeddingInviteCard({
           {couple.groom}
         </motion.h1>
 
-        <div className="my-3 flex items-center justify-center gap-3">
+        <div className="my-1.5 flex items-center justify-center gap-2 sm:my-3 sm:gap-3">
           <motion.span
             className="h-px bg-gradient-to-r from-transparent to-gold"
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 48, opacity: 1 }}
+            animate={{ width: 36, opacity: 1 }}
             transition={{ delay: ampDelay, duration: 0.5, ease }}
           />
           <motion.span
-            className="font-script text-3xl shimmer-gold inline-block"
+            className="font-script text-2xl shimmer-gold inline-block sm:text-3xl"
             initial={{ opacity: 0, scale: 0, rotate: -20 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ delay: ampDelay + 0.12, duration: 0.55, ease }}
@@ -98,13 +98,13 @@ export function WeddingInviteCard({
           <motion.span
             className="h-px bg-gradient-to-l from-transparent to-gold"
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 48, opacity: 1 }}
+            animate={{ width: 36, opacity: 1 }}
             transition={{ delay: ampDelay, duration: 0.5, ease }}
           />
         </div>
 
         <motion.h1
-          className="overflow-hidden font-script text-[clamp(2.75rem,12vw,4.5rem)] leading-none text-maroon"
+          className="invite-hero-name overflow-hidden font-script text-maroon"
           initial={{ opacity: 0, x: 72 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: brideDelay, duration: 0.75, ease }}
@@ -113,7 +113,7 @@ export function WeddingInviteCard({
         </motion.h1>
 
         <motion.p
-          className="mt-8 font-display text-base italic text-gold/55"
+          className="mt-4 font-display text-sm italic text-gold/55 sm:mt-8 sm:text-base"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: taglineDelay, duration: 0.6, ease }}
