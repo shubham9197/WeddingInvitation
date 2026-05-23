@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import { weddingShared } from "@/lib/i18n/shared";
 import { useWeddingMusic } from "@/context/WeddingMusicContext";
 import { WeddingIntroScene } from "./WeddingIntroScene";
 import { WeddingEnvelope } from "./WeddingEnvelope";
@@ -29,7 +30,7 @@ export function EnvelopeIntro({ onOpen }: Props) {
   const [phase, setPhase] = useState<Phase>("names");
   const { content } = useLanguage();
   const { couple, ui } = content;
-  const initials = `${couple.groom.charAt(0)}&${couple.bride.charAt(0)}`;
+  const initials = weddingShared.couple.sealInitials;
   const onOpenRef = useRef(onOpen);
   const openedMainRef = useRef(false);
   onOpenRef.current = onOpen;

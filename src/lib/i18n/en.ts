@@ -4,10 +4,7 @@ import { weddingShared } from "./shared";
 export const en: WeddingContent = {
   locale: "en",
   couple: {
-    bride: "Aishwarya",
-    groom: "Shubham",
-    brideFull: "Aishwarya",
-    groomFull: "Shubham",
+    ...weddingShared.couple,
     tagline: "Two souls, one forever",
   },
   date: {
