@@ -30,7 +30,7 @@ export function EnvelopeIntro({ onOpen }: Props) {
   const [phase, setPhase] = useState<Phase>("names");
   const { content } = useLanguage();
   const { couple, ui } = content;
-  const initials = weddingShared.couple.sealInitials;
+  const initials = weddingShared.sealInitials;
   const onOpenRef = useRef(onOpen);
   const openedMainRef = useRef(false);
   onOpenRef.current = onOpen;

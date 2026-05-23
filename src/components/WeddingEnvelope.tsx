@@ -179,7 +179,7 @@ export function WeddingEnvelope({
               : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
           }
         >
-          <span className="relative z-[1] font-script text-[1.65rem] text-[#fff8e8]">
+          <span className="relative z-[1] font-script text-[1.65rem] tracking-wide text-[#fff8e8] [font-variant-ligatures:none]">
             {initials}
           </span>
           {showTapHint && <TapFingerHint />}
