@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TAP_LOOP = {
   duration: 1.25,
@@ -51,6 +52,8 @@ export function ScratchHeartPulse() {
 
 /** Tap here label below the heart */
 export function ScratchTapBelow() {
+  const { content } = useLanguage();
+
   return (
     <motion.div
       className="pointer-events-none mt-1.5 flex flex-col items-center"
@@ -65,7 +68,7 @@ export function ScratchTapBelow() {
         transition={TAP_LOOP}
       >
         <span className="font-body text-[9px] font-semibold tracking-[0.18em] text-[#fff8e8] uppercase sm:text-[10px] sm:tracking-[0.22em]">
-          Tap here
+          {content.ui.tapHere}
         </span>
       </motion.div>
     </motion.div>

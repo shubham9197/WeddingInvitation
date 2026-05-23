@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { RevealWord } from "./RevealWord";
 import { WeddingInviteCard } from "./WeddingInviteCard";
 import { useReelUnlock } from "@/context/ReelUnlockContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const GANESHA_REVEAL_MS = 2400;
 const WORD_INTERVAL_MS = 400;
@@ -28,6 +29,8 @@ const SHLOKA_WORDS = [
 ];
 
 export function GaneshaBlessing() {
+  const { content } = useLanguage();
+  const { ui } = content;
   const { heroRevealed, unlockHero } = useReelUnlock();
   const [ganeshaDone, setGaneshaDone] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
@@ -130,7 +133,7 @@ export function GaneshaBlessing() {
           transition={{ duration: 2, repeat: Infinity }}
           className="mt-2 text-center font-body text-[9px] tracking-[0.12em] text-gold/45 sm:mt-4 sm:text-[10px]"
         >
-          Please wait for the blessing to finish…
+          {ui.pleaseWaitBlessing}
         </motion.p>
       )}
     </motion.div>

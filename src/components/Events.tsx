@@ -2,22 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
 
 /** Auto-advance interval between events (ms) — slower = easier to read */
 const AUTO_ADVANCE_MS = 4800;
 
-const EVENTS = wedding.events;
-
 const ease = [0.22, 1, 0.36, 1] as const;
-
-const EVENT_TAGLINES: Record<string, string> = {
-  Haldi: "Turmeric blessings & golden glow",
-  Mehendi: "Henna, music & joyful colours",
-  Sangeet: "Dance, songs & celebration",
-  Wedding: "Sacred vows under the mandap",
-};
 
 const FLOATING_ICONS = ["✨", "🌿", "💍", "🪔", "✨", "💐"];
 
@@ -56,7 +47,8 @@ function HeartDot({ active }: { active: boolean }) {
 }
 
 export function Events() {
-  const { couple, date } = wedding;
+  const { content } = useLanguage();
+  const { couple, date, events: EVENTS, ui } = content;
   const { ref: sectionRef, playKey } = useSlideReplay();
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -324,10 +316,10 @@ export function Events() {
           className="w-full text-center"
         >
           <p className="font-body text-[10px] tracking-[0.4em] text-gold/60 uppercase">
-            Celebrations
+            {ui.events.celebrations}
           </p>
           <h2 className="mt-1 font-script text-[clamp(2rem,8vw,2.75rem)] leading-tight shimmer-gold">
-            Our Events
+            {ui.events.title}
           </h2>
         </motion.div>
 
@@ -446,7 +438,7 @@ export function Events() {
               {activeEvent.name}
             </p>
             <p className="mt-1.5 font-display text-xs italic leading-relaxed text-gold/60 sm:text-sm">
-              {EVENT_TAGLINES[activeEvent.name]}
+              {activeEvent.tagline}
             </p>
             <p className="mt-2 font-body text-[10px] tracking-[0.15em] text-gold/45">
               {activeEvent.date} · {activeEvent.time}
@@ -479,7 +471,7 @@ export function Events() {
             transition={{ opacity: { duration: 2.5, repeat: Infinity } }}
             className="font-body text-[9px] tracking-[0.22em] text-gold/40 uppercase"
           >
-            Swipe to see each celebration
+            {ui.events.swipeHint}
           </motion.p>
         </div>
       </div>

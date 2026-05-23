@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { ScratchHeart } from "./ScratchHeart";
 import { ScratchHandAbove, ScratchTapBelow } from "./ScratchHandHint";
 import {
@@ -15,7 +15,8 @@ import { useSlideReplay } from "@/hooks/useSlideReplay";
 import { getReelScrollContainer, getReelSlideHeight } from "@/lib/reel-scroll";
 
 export function SaveTheDate() {
-  const { date } = wedding;
+  const { content } = useLanguage();
+  const { date, ui } = content;
   const { saveDateRevealed, unlockSaveDate } = useReelUnlock();
   const revealed = useRef(0);
   const navigated = useRef(false);
@@ -94,14 +95,14 @@ export function SaveTheDate() {
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="text-[#d4af37]" size={14} />
             <p className="font-body text-[11px] tracking-[0.5em] text-gold/70 uppercase">
-              Save the Date
+              {ui.saveTheDate.title}
             </p>
             <Sparkles className="text-[#d4af37]" size={14} />
           </div>
 
           <h2 className="mt-5 font-display text-[clamp(1.5rem,6vw,2.4rem)] font-semibold leading-tight text-ivory">
-            Reveal Our{" "}
-            <span className="shimmer-gold">Big Day</span>
+            {ui.saveTheDate.revealTitle}{" "}
+            <span className="shimmer-gold">{ui.saveTheDate.revealHighlight}</span>
           </h2>
 
           <motion.p
@@ -109,7 +110,7 @@ export function SaveTheDate() {
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            Scratch the hearts to reveal
+            {ui.saveTheDate.scratchHint}
           </motion.p>
 
           <div className="mx-auto mt-6 flex w-full max-w-[min(340px,100%)] justify-between gap-0.5 sm:mt-10 sm:gap-2">
@@ -155,9 +156,11 @@ export function SaveTheDate() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 className="mt-8 rounded-2xl border border-gold/40 bg-gradient-to-r from-[#1a1512] via-[#121010] to-[#1a1218] px-4 py-3 shadow-[0_0_24px_rgba(201,162,39,0.15)]"
               >
-                <p className="font-script text-2xl text-gold-light">Congratulations!</p>
+                <p className="font-script text-2xl text-gold-light">
+                  {ui.saveTheDate.congratulations}
+                </p>
                 <p className="mt-1 font-body text-[10px] tracking-[0.2em] text-gold/60 uppercase">
-                  Our date is revealed
+                  {ui.saveTheDate.dateRevealed}
                 </p>
               </motion.div>
             )}
@@ -200,7 +203,7 @@ export function SaveTheDate() {
             animate={{ opacity: 1 }}
             className="mt-6 font-body text-[10px] tracking-[0.15em] text-gold/45"
           >
-            Scroll down to continue →
+            {ui.scrollContinue}
           </motion.p>
         )}
       </div>

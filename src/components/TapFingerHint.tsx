@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TAP_LOOP = {
   duration: 1.25,
@@ -11,6 +12,8 @@ const TAP_LOOP = {
 
 /** Yellow hand + “Tap here” — mount inside the envelope seal (parent = seal circle) */
 export function TapFingerHint() {
+  const { content } = useLanguage();
+
   return (
     <div
       className="pointer-events-none absolute inset-0 z-10 overflow-visible"
@@ -49,7 +52,7 @@ export function TapFingerHint() {
         transition={TAP_LOOP}
       >
         <span className="font-body text-[10px] font-semibold tracking-[0.22em] text-[#fff8e8] uppercase">
-          Tap here
+          {content.ui.tapHere}
         </span>
       </motion.div>
     </div>

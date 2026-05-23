@@ -1,10 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { OrnamentDivider } from "./Ornament";
 
+/** Legacy section — not used in reel flow; kept for optional layouts */
 export function Story() {
+  const { content } = useLanguage();
+  const story =
+    "story" in content
+      ? (content as { story: { year: string; title: string; text: string }[] }).story
+      : [];
+
+  if (story.length === 0) return null;
+
   return (
     <section id="story" className="relative px-6 py-24">
       <div className="mx-auto max-w-2xl text-center">
@@ -22,31 +31,28 @@ export function Story() {
       <div className="relative mx-auto max-w-xl">
         <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-gold/40 via-gold/20 to-transparent sm:left-1/2 sm:-translate-x-px" />
 
-        {wedding.story.map((chapter, i) => (
+        {story.map((chapter, i) => (
           <motion.article
             key={chapter.year}
             initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, delay: i * 0.1 }}
-            className={`relative mb-14 pl-12 sm:pl-0 sm:w-[calc(50%-2rem)] ${
-              i % 2 === 0
-                ? "sm:mr-auto sm:pr-8 sm:text-right"
-                : "sm:ml-auto sm:pl-8 sm:text-left sm:mt-[-3rem]"
+            transition={{ delay: i * 0.1 }}
+            className={`relative mb-12 pl-12 sm:mb-16 sm:w-1/2 sm:pl-0 ${
+              i % 2 === 0 ? "sm:mr-auto sm:pr-12 sm:text-right" : "sm:ml-auto sm:pl-12"
             }`}
           >
-            <span
-              className={`absolute top-1 flex h-8 w-8 items-center justify-center rounded-full border border-gold/40 bg-plum text-xs text-gold sm:top-2 ${
-                i % 2 === 0
-                  ? "left-0 sm:left-auto sm:right-[-1.15rem]"
-                  : "left-0 sm:left-[-1.15rem]"
-              }`}
-            >
-              {chapter.year.slice(2)}
+            <span className="absolute left-0 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-gold/40 bg-maroon-deep font-display text-xs text-gold sm:left-auto sm:right-0 sm:top-0">
+              {chapter.year.slice(-2)}
             </span>
-            <p className="font-display text-xs tracking-[0.2em] text-gold">{chapter.year}</p>
-            <h3 className="mt-1 font-display text-xl text-champagne">{chapter.title}</h3>
-            <p className="mt-2 font-body text-sm leading-relaxed text-champagne/65">
+            {i % 2 !== 0 && (
+              <span className="absolute -left-4 top-3 hidden h-2 w-2 rounded-full bg-gold sm:left-0 sm:block" />
+            )}
+            {i % 2 === 0 && (
+              <span className="absolute -right-4 top-3 hidden h-2 w-2 rounded-full bg-gold sm:right-0 sm:block" />
+            )}
+            <h3 className="font-display text-xl text-gold-light">{chapter.title}</h3>
+            <p className="mt-2 font-body text-sm leading-relaxed text-champagne/70">
               {chapter.text}
             </p>
           </motion.article>

@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { LocationMap } from "./LocationMap";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
 
 export function Venue() {
-  const { couple, date, venue } = wedding;
+  const { content } = useLanguage();
+  const { couple, date, venue, ui } = content;
   const { ref, playKey } = useSlideReplay();
 
   return (
@@ -63,7 +64,7 @@ export function Venue() {
           className="w-full text-center"
         >
           <h2 className="font-display text-[clamp(1.75rem,7vw,2.25rem)] font-semibold leading-tight text-ivory">
-            Join Us Here
+            {ui.venue.title}
           </h2>
         </motion.div>
 
@@ -98,7 +99,7 @@ export function Venue() {
             viewport={{ once: false }}
             className="font-body text-[9px] tracking-[0.22em] text-gold/35 uppercase"
           >
-            Click the map or link above for directions
+            {ui.tapOpenMaps}
           </motion.p>
         </div>
       </div>

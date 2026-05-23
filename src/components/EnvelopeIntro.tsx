@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { useWeddingMusic } from "@/context/WeddingMusicContext";
 import { WeddingIntroScene } from "./WeddingIntroScene";
 import { WeddingEnvelope } from "./WeddingEnvelope";
@@ -27,7 +27,8 @@ const EMERGE_FADE_MS = 1100;
 export function EnvelopeIntro({ onOpen }: Props) {
   const { tryPlay } = useWeddingMusic();
   const [phase, setPhase] = useState<Phase>("names");
-  const { couple } = wedding;
+  const { content } = useLanguage();
+  const { couple, ui } = content;
   const initials = `${couple.groom.charAt(0)}&${couple.bride.charAt(0)}`;
   const onOpenRef = useRef(onOpen);
   const openedMainRef = useRef(false);
@@ -83,6 +84,8 @@ export function EnvelopeIntro({ onOpen }: Props) {
             showNames={phase === "names"}
             groom={couple.groom}
             bride={couple.bride}
+            celebration={ui.intro.celebration}
+            invitationAwaits={ui.intro.invitationAwaits}
           />
 
           {isEmerge && (
@@ -150,6 +153,8 @@ export function EnvelopeIntro({ onOpen }: Props) {
                       opening={isOpening || isEmerge}
                       fading={isEmerge}
                       showTapHint={phase === "envelope"}
+                      weddingLabel={ui.envelope.wedding}
+                      invitationLabel={ui.envelope.invitation}
                     />
                   </div>
                 </motion.div>

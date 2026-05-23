@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { galleryImages, type GalleryImage } from "@/lib/gallery-images";
+import { useLanguage } from "@/context/LanguageContext";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
 import { GalleryPhotoFrame } from "./GalleryPhotoFrame";
 
@@ -18,6 +19,8 @@ const ENTRY_FROM = [
 const ENTRY_TO = { opacity: 1, x: 0, y: 0 };
 
 export function Gallery() {
+  const { content } = useLanguage();
+  const { ui } = content;
   const [images, setImages] = useState<GalleryImage[]>(galleryImages);
   const [active, setActive] = useState<number | null>(null);
   const { ref, playKey } = useSlideReplay();
@@ -64,13 +67,13 @@ export function Gallery() {
         className="mb-4 shrink-0 text-center sm:mb-6"
       >
         <p className="font-body text-[10px] tracking-[0.4em] text-maroon/50 uppercase">
-          Memories
+          {ui.gallery.eyebrow}
         </p>
         <h2 className="mt-2 font-script text-[clamp(2.25rem,10vw,3rem)] text-maroon">
-          Our Gallery
+          {ui.gallery.title}
         </h2>
         <p className="mt-2 font-body text-[10px] tracking-[0.2em] text-gold/45">
-          {images.length} moments · tap to enlarge
+          {images.length} {ui.gallery.moments}
         </p>
       </motion.div>
 
@@ -117,7 +120,7 @@ export function Gallery() {
             <div className="absolute inset-0 bg-gradient-to-t from-maroon/45 via-transparent to-transparent" />
             {i === 0 && (
               <span className="shimmer-red absolute bottom-2 left-3 font-script text-lg sm:bottom-3 sm:text-2xl">
-                Together Forever
+                {ui.gallery.togetherForever}
               </span>
             )}
           </motion.button>
@@ -157,11 +160,11 @@ export function Gallery() {
                   setActive(null);
                 }}
                 className="flex h-10 items-center gap-1.5 rounded-full border border-gold/40 bg-[#1a1512]/90 px-3.5 text-gold shadow-[0_4px_16px_rgba(0,0,0,0.35)]"
-                aria-label="Back to gallery"
+                aria-label={ui.gallery.backToGallery}
               >
                 <ArrowLeft size={18} strokeWidth={2} />
                 <span className="font-body text-[10px] font-medium tracking-[0.12em] uppercase">
-                  Back
+                  {ui.gallery.backToGallery}
                 </span>
               </button>
               <p className="font-body text-[10px] tracking-[0.2em] text-ivory/70">

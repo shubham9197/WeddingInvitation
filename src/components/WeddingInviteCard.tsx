@@ -1,12 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { RevealWord } from "./RevealWord";
 
 const WORD_MS = 380;
-const FAMILIES_WORDS = ["Together", "with", "their", "families"];
-
 type Props = {
   animate?: boolean;
   className?: string;
@@ -31,15 +29,16 @@ export function WeddingInviteCard({
   wordIntervalMs = 400,
   instant = false,
 }: Props) {
-  const { couple } = wedding;
+  const { content } = useLanguage();
+  const { couple, ui } = content;
+  const { familiesWords, requestLine } = ui.invite;
 
   const shellClass = embedded
     ? `relative px-1 py-3 text-center sm:px-2 sm:py-6 ${className}`
     : `invite-card frame-border relative px-6 py-10 text-center sm:px-10 sm:py-14 ${className}`;
 
   if (heroSequence) {
-    const familiesEnd =
-      FAMILIES_WORDS.length * WORD_MS + 300;
+    const familiesEnd = familiesWords.length * WORD_MS + 300;
     const requestDelay = familiesEnd / 1000;
     const groomDelay = requestDelay + 0.85;
     const ampDelay = groomDelay + 0.55;
@@ -49,7 +48,7 @@ export function WeddingInviteCard({
     return (
       <div className={shellClass}>
         <p className="font-body text-[9px] tracking-[0.28em] text-gold/55 uppercase sm:text-[10px] sm:tracking-[0.4em]">
-          {FAMILIES_WORDS.map((w, i) => (
+          {familiesWords.map((w, i) => (
             <RevealWord
               key={w}
               index={i}
@@ -68,7 +67,7 @@ export function WeddingInviteCard({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: requestDelay, duration: 0.65, ease }}
         >
-          Request the pleasure of your company at the wedding of
+          {requestLine}
         </motion.p>
 
         <motion.h1
@@ -239,13 +238,13 @@ export function WeddingInviteCard({
         {...fadeUp(0.1)}
         className="font-body text-[10px] tracking-[0.4em] text-gold/55 uppercase"
       >
-        Together with their families
+        {familiesWords.join(" ")}
       </Wrapper>
       <Wrapper
         {...fadeUp(0.25)}
         className="mt-6 font-display text-sm tracking-[0.2em] text-gold/65 uppercase"
       >
-        Request the pleasure of your company at the wedding of
+        {requestLine}
       </Wrapper>
       <WrapperH1
         {...fadeUp(0.4)}

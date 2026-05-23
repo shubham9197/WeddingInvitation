@@ -6,9 +6,9 @@ import {
   Noto_Serif_Devanagari,
 } from "next/font/google";
 import "./globals.css";
-import { wedding } from "@/lib/wedding-data";
+import { getWeddingContent, DEFAULT_LOCALE } from "@/lib/i18n";
 
-const { groom, bride } = wedding.couple;
+const { groom, bride } = getWeddingContent(DEFAULT_LOCALE).couple;
 const inviteTitle = `${groom} & ${bride} — Wedding Invitation`;
 
 const greatVibes = Great_Vibes({
@@ -60,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="mr"
       className={`${greatVibes.variable} ${cormorant.variable} ${poppins.variable} ${devanagari.variable}`}
     >
       <body className="antialiased pb-[env(safe-area-inset-bottom)]">{children}</body>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ENTER_EASE = [0.16, 1, 0.3, 1] as const;
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -22,6 +23,8 @@ type Props = {
 
 /** 3D traffic officer walks in, speaks, then Tap here appears */
 export function VenueGuideHint({ visible = true, onOfficerReady }: Props) {
+  const { content } = useLanguage();
+  const { ui } = content;
   const [phase, setPhase] = useState<"hidden" | "enter" | "speak" | "tap">("hidden");
 
   useEffect(() => {
@@ -101,7 +104,7 @@ export function VenueGuideHint({ visible = true, onOfficerReady }: Props) {
             >
               <span className="absolute -left-1.5 bottom-3 h-2.5 w-2.5 rotate-45 border-b border-l border-gold/35 bg-black/85" />
               <p className="font-display text-[10px] leading-snug text-[#fff8e8] sm:text-[11px]">
-                Need directions? Tap below — I&apos;ll guide you to the venue!
+                {ui.venueDirections}
               </p>
             </motion.div>
           )}
@@ -125,6 +128,9 @@ export function VenueMapsCta({
   showTapHint,
   onDismiss,
 }: VenueMapsCtaProps) {
+  const { content } = useLanguage();
+  const { ui } = content;
+
   return (
     <div className="flex w-full flex-col items-center pt-1">
       <AnimatePresence>
@@ -175,7 +181,7 @@ export function VenueMapsCta({
               : ""
           }`}
         >
-          Open in Google Maps
+          {ui.openInMaps}
           <ExternalLink size={12} className="shrink-0" />
         </a>
       </div>
@@ -197,7 +203,7 @@ export function VenueMapsCta({
               transition={TAP_LOOP}
             >
               <span className="font-body text-[9px] font-semibold tracking-[0.2em] text-[#fff8e8] uppercase sm:text-[10px]">
-                Tap here
+                {ui.tapHere}
               </span>
             </motion.div>
           </motion.div>

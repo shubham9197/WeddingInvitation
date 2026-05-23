@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { COUNTDOWN_SLIDE_INDEX } from "@/context/ReelUnlockContext";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
 import { getReelScrollContainer, getReelSlideHeight } from "@/lib/reel-scroll";
@@ -20,8 +20,6 @@ function getTimeLeft(target: string) {
     seconds: Math.floor((diff / 1000) % 60),
   };
 }
-
-const LABELS = ["Days", "Hours", "Mins", "Secs"] as const;
 
 function HeartbeatLine() {
   return (
@@ -49,7 +47,9 @@ function HeartbeatLine() {
 }
 
 export function Countdown() {
-  const { couple, date } = wedding;
+  const { content } = useLanguage();
+  const { couple, date, ui } = content;
+  const LABELS = ui.countdown.labels;
   const { ref: sectionRef, playKey } = useSlideReplay(0.55);
   const advancedRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -159,7 +159,7 @@ export function Countdown() {
           transition={{ delay: 0.2, duration: 0.7 }}
           className="mt-4 font-body text-[10px] tracking-[0.4em] text-gold/60 uppercase"
         >
-          Counting every heartbeat until
+          {ui.countdown.eyebrow}
         </motion.p>
 
         <motion.h2
@@ -169,7 +169,7 @@ export function Countdown() {
           transition={{ delay: 0.35, duration: 0.7 }}
           className="mt-3 font-script text-[clamp(2.5rem,10vw,3.25rem)] shimmer-gold"
         >
-          The Big Day
+          {ui.countdown.title}
         </motion.h2>
 
         <motion.p
@@ -221,7 +221,7 @@ export function Countdown() {
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 className="relative font-display text-xl font-bold tabular-nums text-ivory sm:text-2xl md:text-3xl"
               >
-                {label === "Days"
+                {i === 0
                   ? String(values[i])
                   : String(values[i]).padStart(2, "0")}
               </motion.span>
@@ -255,7 +255,7 @@ export function Countdown() {
           transition={{ duration: 2.5, repeat: Infinity }}
           className="mt-3 font-display text-xs italic text-gold/45"
         >
-          Until we say &ldquo;I do&rdquo;
+          {ui.countdown.untilWeSay}
         </motion.p>
         </CountdownFrameCard>
       </motion.div>

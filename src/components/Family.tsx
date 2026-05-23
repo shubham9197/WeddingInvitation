@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { useSlideReplay } from "@/hooks/useSlideReplay";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -152,7 +152,8 @@ function FamilyCard({
 }
 
 export function Family() {
-  const { family, couple } = wedding;
+  const { content } = useLanguage();
+  const { family, couple, ui } = content;
   const { ref, playKey } = useSlideReplay();
 
   return (
@@ -268,10 +269,10 @@ export function Family() {
             transition={{ delay: 0.1, duration: 0.7 }}
             className="font-body text-[9px] text-gold/60 uppercase"
           >
-            With blessings of
+            {family.withBlessings}
           </motion.p>
           <h2 className="mt-1.5 font-script text-[clamp(2rem,8vw,2.85rem)] leading-tight shimmer-gold">
-            Our Families
+            {ui.family.title}
           </h2>
         </motion.div>
 
@@ -286,9 +287,9 @@ export function Family() {
           />
 
           <FamilyCard
-            label="Bride's family"
+            label={family.brideFamilyLabel}
             name={couple.brideFull}
-            relation="Daughter of"
+            relation={family.daughterOf}
             parents={family.brideParents}
             playKey={playKey}
             accent="bride"
@@ -324,9 +325,9 @@ export function Family() {
           </motion.div>
 
           <FamilyCard
-            label="Groom's family"
+            label={family.groomFamilyLabel}
             name={couple.groomFull}
-            relation="Son of"
+            relation={family.sonOf}
             parents={family.groomParents}
             playKey={playKey}
             delay={0.15}

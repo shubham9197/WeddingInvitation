@@ -8,9 +8,18 @@ type Props = {
   showNames: boolean;
   groom: string;
   bride: string;
+  celebration: string;
+  invitationAwaits: string;
 };
 
-export function WeddingIntroScene({ blurred, showNames, groom, bride }: Props) {
+export function WeddingIntroScene({
+  blurred,
+  showNames,
+  groom,
+  bride,
+  celebration,
+  invitationAwaits,
+}: Props) {
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#0a0808]">
       {/* Wedding illustration backdrop */}
@@ -50,14 +59,30 @@ export function WeddingIntroScene({ blurred, showNames, groom, bride }: Props) {
       {/* Couple names — center gap above mandap */}
       <AnimatePresence>
         {showNames && (
-          <AnimateNames key="names" groom={groom} bride={bride} />
+          <AnimateNames
+            key="names"
+            groom={groom}
+            bride={bride}
+            celebration={celebration}
+            invitationAwaits={invitationAwaits}
+          />
         )}
       </AnimatePresence>
     </div>
   );
 }
 
-function AnimateNames({ groom, bride }: { groom: string; bride: string }) {
+function AnimateNames({
+  groom,
+  bride,
+  celebration,
+  invitationAwaits,
+}: {
+  groom: string;
+  bride: string;
+  celebration: string;
+  invitationAwaits: string;
+}) {
   return (
     <motion.div
       className="pointer-events-none absolute inset-x-0 top-[clamp(18%,28vh,32%)] z-10 flex flex-col items-center px-4 sm:px-6"
@@ -72,7 +97,7 @@ function AnimateNames({ groom, bride }: { groom: string; bride: string }) {
         transition={{ delay: 0.3, duration: 0.8 }}
         className="intro-scene-eyebrow relative font-body text-[9px] font-semibold tracking-[0.45em] uppercase sm:text-[10px]"
       >
-        A Celebration of Love
+        {celebration}
       </motion.p>
 
       <motion.div
@@ -103,7 +128,7 @@ function AnimateNames({ groom, bride }: { groom: string; bride: string }) {
         transition={{ delay: 1.2, duration: 2.5, repeat: Infinity }}
         className="intro-scene-sub relative mt-5 font-display text-[10px] italic tracking-wide sm:text-[11px]"
       >
-        Your invitation awaits…
+        {invitationAwaits}
       </motion.p>
     </motion.div>
   );

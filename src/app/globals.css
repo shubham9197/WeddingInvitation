@@ -24,6 +24,11 @@
   font-family: var(--font-family-devanagari);
 }
 
+/* Marathi locale — readable Devanagari for body text */
+html.locale-mr .font-body {
+  font-family: var(--font-family-devanagari);
+}
+
 /* Shiny true red — decorative hearts (not pink rose) */
 .heart-shiny-red {
   color: var(--color-heart-red);

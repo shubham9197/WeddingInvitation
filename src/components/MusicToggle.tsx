@@ -12,7 +12,7 @@ export function MusicToggle() {
       type="button"
       onClick={toggle}
       whileTap={{ scale: 0.92 }}
-      className="fixed right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[60] flex h-11 w-11 items-center justify-center rounded-full border border-gold/50 bg-[#1a1512]/90 text-gold shadow-[0_0_20px_rgba(201,162,39,0.2)] backdrop-blur-sm"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-[#1a1512]/90 text-gold shadow-[0_0_20px_rgba(201,162,39,0.2)] backdrop-blur-sm"
       aria-label={playing ? "Mute music" : "Play music"}
       aria-pressed={playing}
     >

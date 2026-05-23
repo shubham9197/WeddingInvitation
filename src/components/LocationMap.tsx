@@ -4,12 +4,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { wedding } from "@/lib/wedding-data";
+import { useLanguage } from "@/context/LanguageContext";
 import { VenueGuideHint, VenueMapsCta } from "./VenueGuideHint";
 
-function buildEmbedUrl(): string {
-  const { venue } = wedding;
-  const { coordinates, name, address } = venue;
-
+function buildEmbedUrl(
+  coordinates: { lat: number; lng: number } | undefined,
+  name: string,
+  address: string
+): string {
   if (coordinates) {
     return `https://maps.google.com/maps?q=${coordinates.lat},${coordinates.lng}&hl=en&z=16&output=embed`;
   }
@@ -18,8 +20,10 @@ function buildEmbedUrl(): string {
 }
 
 export function LocationMap() {
-  const { venue } = wedding;
-  const embedUrl = buildEmbedUrl();
+  const { content } = useLanguage();
+  const { venue } = content;
+  const { mapUrl, coordinates } = wedding.venue;
+  const embedUrl = buildEmbedUrl(coordinates, venue.name, venue.address);
   const [showGuide, setShowGuide] = useState(true);
   const [showTapHint, setShowTapHint] = useState(false);
 
@@ -59,11 +63,11 @@ export function LocationMap() {
             allowFullScreen
           />
           <a
-            href={venue.mapUrl}
+            href={mapUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="absolute inset-0 z-10"
-            aria-label={`Open ${venue.name} in Google Maps`}
+            aria-label={`${content.ui.openInMaps} — ${venue.name}`}
             onClick={dismissGuide}
           />
         </motion.div>
@@ -83,7 +87,7 @@ export function LocationMap() {
           </p>
 
           <VenueMapsCta
-            mapUrl={venue.mapUrl}
+            mapUrl={mapUrl}
             venueName={venue.name}
             showTapHint={showGuide && showTapHint}
             onDismiss={dismissGuide}

@@ -9,6 +9,8 @@ const SMOOTH = [0.22, 1, 0.36, 1] as const;
 type Props = {
   initials: string;
   opening: boolean;
+  weddingLabel: string;
+  invitationLabel: string;
   /** Hide maroon frame when image expands to fullscreen */
   hideFrame?: boolean;
   /** Fade out during emerge to Hero */
@@ -21,6 +23,8 @@ type Props = {
 export function WeddingEnvelope({
   initials,
   opening,
+  weddingLabel,
+  invitationLabel,
   hideFrame = false,
   fading = false,
   showTapHint = false,
@@ -143,10 +147,10 @@ export function WeddingEnvelope({
           {/* Title sits in the flat top band of the flap — not clipped by the triangle point */}
           <div className="pointer-events-none absolute inset-x-0 top-0 z-[2] flex h-[38%] min-h-[4.5rem] flex-col items-center justify-center px-4 pt-1 text-center">
             <p className="font-script text-[clamp(1.65rem,7.5vw,2rem)] leading-[0.95] shimmer-gold drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]">
-              Wedding
+              {weddingLabel}
             </p>
             <p className="mt-0.5 font-script text-[clamp(1.25rem,5.5vw,1.55rem)] leading-none tracking-[0.06em] text-[#fff8e8] drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
-              Invitation
+              {invitationLabel}
             </p>
             <div className="mt-2 h-px w-14 bg-gradient-to-r from-transparent via-[#e8c547]/80 to-transparent" />
           </div>

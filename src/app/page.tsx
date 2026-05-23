@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { EnvelopeIntro } from "@/components/EnvelopeIntro";
 import { FloralBg } from "@/components/FloralBg";
 import { FloatingHearts } from "@/components/FloatingHearts";
-import { MusicToggle } from "@/components/MusicToggle";
+import { TopBarControls } from "@/components/TopBarControls";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { Hero } from "@/components/Hero";
 import { SaveTheDate } from "@/components/SaveTheDate";
 import { Countdown } from "@/components/Countdown";
@@ -25,7 +26,9 @@ export default function Home() {
   }, []);
 
   return (
+    <LanguageProvider>
     <WeddingMusicProvider>
+      <TopBarControls />
       <EnvelopeIntro onOpen={handleIntroOpen} />
 
       <AnimatePresence>
@@ -39,7 +42,6 @@ export default function Home() {
           >
             <ReelUnlockProvider>
               <FloralBg />
-              <MusicToggle />
               <ReelScrollGuard />
 
               <main
@@ -61,5 +63,6 @@ export default function Home() {
         )}
       </AnimatePresence>
     </WeddingMusicProvider>
+    </LanguageProvider>
   );
 }
