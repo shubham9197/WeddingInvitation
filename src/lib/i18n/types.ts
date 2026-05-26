@@ -59,6 +59,7 @@ export type WeddingContent = {
   ui: {
     langMarathi: string;
     langEnglish: string;
+    selectLanguage: string;
     scroll: string;
     scrollContinue: string;
     tapHere: string;

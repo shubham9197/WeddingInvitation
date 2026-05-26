@@ -15,6 +15,9 @@ type WeddingMusicContextValue = {
   playing: boolean;
   toggle: () => void;
   tryPlay: () => void;
+  /** Pause when leaving the app (e.g. Maps) — resumes on return if music was playing */
+  pauseForExternal: () => void;
+  resumeAfterExternal: () => void;
 };
 
 const WeddingMusicContext = createContext<WeddingMusicContextValue | null>(null);
@@ -22,6 +25,7 @@ const WeddingMusicContext = createContext<WeddingMusicContextValue | null>(null)
 export function WeddingMusicProvider({ children }: { children: ReactNode }) {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const shouldResumeAfterExternalRef = useRef(false);
 
   const { src, volume, clipDurationSeconds, startAtSeconds } = wedding.music;
   const clipEnd = startAtSeconds + clipDurationSeconds;
@@ -62,12 +66,54 @@ export function WeddingMusicProvider({ children }: { children: ReactNode }) {
   }, [play]);
 
   const toggle = useCallback(() => {
-    if (playing) pause();
-    else play();
+    if (playing) {
+      shouldResumeAfterExternalRef.current = false;
+      pause();
+    } else play();
   }, [playing, pause, play]);
 
+  const pauseForExternal = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || audio.paused) return;
+    shouldResumeAfterExternalRef.current = true;
+    audio.pause();
+    setPlaying(false);
+  }, []);
+
+  const resumeAfterExternal = useCallback(() => {
+    if (!shouldResumeAfterExternalRef.current) return;
+    const audio = audioRef.current;
+    if (!audio) return;
+    shouldResumeAfterExternalRef.current = false;
+    audio.volume = volume;
+    audio
+      .play()
+      .then(() => setPlaying(true))
+      .catch(() => setPlaying(false));
+  }, [volume]);
+
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") {
+        pauseForExternal();
+      } else {
+        resumeAfterExternal();
+      }
+    };
+
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pageshow", () => {
+      if (document.visibilityState === "visible") resumeAfterExternal();
+    });
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [pauseForExternal, resumeAfterExternal]);
+
   return (
-    <WeddingMusicContext.Provider value={{ playing, toggle, tryPlay }}>
+    <WeddingMusicContext.Provider
+      value={{ playing, toggle, tryPlay, pauseForExternal, resumeAfterExternal }}
+    >
       <audio ref={audioRef} src={src} preload="auto" loop={false} className="hidden" />
       {children}
     </WeddingMusicContext.Provider>

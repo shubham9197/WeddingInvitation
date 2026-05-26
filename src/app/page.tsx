@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <LanguageProvider>
     <WeddingMusicProvider>
-      <TopBarControls />
+      <TopBarControls showLanguageHint={!opened} />
       <EnvelopeIntro onOpen={handleIntroOpen} />
 
       <AnimatePresence>

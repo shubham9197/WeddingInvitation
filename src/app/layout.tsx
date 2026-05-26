@@ -60,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="mr"
+      lang="en"
       className={`${greatVibes.variable} ${cormorant.variable} ${poppins.variable} ${devanagari.variable}`}
     >
       <body className="antialiased pb-[env(safe-area-inset-bottom)]">{children}</body>

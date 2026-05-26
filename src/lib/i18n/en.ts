@@ -80,6 +80,7 @@ export const en: WeddingContent = {
   ui: {
     langMarathi: "मराठी",
     langEnglish: "English",
+    selectLanguage: "Choose your language",
     scroll: "Scroll",
     scrollContinue: "Scroll down to continue →",
     tapHere: "Tap here",

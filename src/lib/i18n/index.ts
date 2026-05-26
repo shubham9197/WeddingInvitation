@@ -6,7 +6,7 @@ export type { Locale, WeddingContent } from "./types";
 
 const catalogs: Record<Locale, WeddingContent> = { mr, en };
 
-export const DEFAULT_LOCALE: Locale = "mr";
+export const DEFAULT_LOCALE: Locale = "en";
 
 export function getWeddingContent(locale: Locale): WeddingContent {
   return catalogs[locale];

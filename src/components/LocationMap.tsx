@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { wedding } from "@/lib/wedding-data";
 import { useLanguage } from "@/context/LanguageContext";
+import { useWeddingMusic } from "@/context/WeddingMusicContext";
 import { VenueGuideHint, VenueMapsCta } from "./VenueGuideHint";
 
 function buildEmbedUrl(
@@ -21,16 +22,40 @@ function buildEmbedUrl(
 
 export function LocationMap() {
   const { content } = useLanguage();
+  const { pauseForExternal } = useWeddingMusic();
   const { venue } = content;
   const { mapUrl, coordinates } = wedding.venue;
   const embedUrl = buildEmbedUrl(coordinates, venue.name, venue.address);
   const [showGuide, setShowGuide] = useState(true);
   const [showTapHint, setShowTapHint] = useState(false);
+  const [guideKey, setGuideKey] = useState(0);
+  const guideDismissedRef = useRef(false);
 
   const dismissGuide = () => {
+    guideDismissedRef.current = true;
     setShowGuide(false);
     setShowTapHint(false);
+    pauseForExternal();
   };
+
+  /** After opening Maps and returning to the tab, replay officer + hand */
+  useEffect(() => {
+    const restoreGuide = () => {
+      if (document.visibilityState !== "visible") return;
+      if (!guideDismissedRef.current) return;
+      guideDismissedRef.current = false;
+      setShowGuide(true);
+      setShowTapHint(false);
+      setGuideKey((k) => k + 1);
+    };
+
+    document.addEventListener("visibilitychange", restoreGuide);
+    window.addEventListener("pageshow", restoreGuide);
+    return () => {
+      document.removeEventListener("visibilitychange", restoreGuide);
+      window.removeEventListener("pageshow", restoreGuide);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -49,6 +74,7 @@ export function LocationMap() {
         >
           {showGuide && (
             <VenueGuideHint
+              key={guideKey}
               visible={showGuide}
               onOfficerReady={() => setShowTapHint(true)}
             />
